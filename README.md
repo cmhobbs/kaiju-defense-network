@@ -25,3 +25,6 @@ This is a simple project I'm noodling with to refamiliarize myself with Go.
   - [ ] Make them communicate with a shared volume and the JSON file
   - [ ] Make them communicate using Valkey (generator publishes, alert system subscribes)
   - [ ] Make them communicate with a REST API
+  - [ ] Get weird and throw them into minikube
+  - [ ] Add more output to stdout/stderr and shovel logs somewhere neat
+  - [ ] Add `HEALTHCHECK` instructions to the Containerfiles
