@@ -11,7 +11,8 @@ This is a simple project I'm noodling with to refamiliarize myself with Go.
 - [ ] Generate multiple sightings in one run
 
 ## Kaiju Alert System
-- [ ] Output an alert to stdout when a high-threat kaiju is sighted above a defined threshold
+- [x] Output an alert to stdout when a high-threat kaiju is sighted above a defined threshold
+  - [ ] write tests for `shouldAlert()` and `formatAlert()`
 - [ ] Output an action based on the threat level (e.g., evacuate, deploy defenses)
 - [ ] Write alerts to a log file like `alerts.log` including full details
 - [ ] Process multiple sightings in one batch
