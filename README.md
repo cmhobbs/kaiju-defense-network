@@ -5,7 +5,7 @@ This is a simple project I'm noodling with to refamiliarize myself with Go.
 ## Kaiju Sightings Generator Tasks
 - [x] Generate a random kaiju sighting with name/location/threat level
 - [x] Output the sighting to the terminal
-- [ ] Add size and element traits to each kaiju randomly
+- [x] Add size and element traits to each kaiju randomly
 - [ ] Add a timestamp to each sighting ("2025-06-20 22:14")
 - [ ] Append sightings to a JSON file
 - [ ] Generate multiple sightings in one run

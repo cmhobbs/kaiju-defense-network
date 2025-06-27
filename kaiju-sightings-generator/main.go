@@ -10,6 +10,8 @@ type Kaiju struct {
 	Name        string
 	Location    string
 	ThreatLevel string
+	Size        string
+	Behavior    string
 }
 
 type KaijuGenerator struct {
@@ -17,13 +19,15 @@ type KaijuGenerator struct {
 	Suffixes     []string
 	Locations    []string
 	ThreatLevels []string
+	Sizes        []string
+	Behaviors    []string
 }
 
 func NewKaijuGenerator() *KaijuGenerator {
 	return &KaijuGenerator{
 		Prefixes: []string{
-			"Giga", "Mega", "Ultra", "Titan", "Apex", "Omega", "Hydro", "Pyro",
-			"Cryo", "Neo",
+			"Giga", "Mega", "Ultra", "Apex", "Omega", "Hydro", "Pyro",
+			"Electro", "Cryo", "Neo",
 		},
 		Suffixes: []string{
 			"zilla", "tron", "saurus", "moth", "beast", "king", "lord", "demon",
@@ -36,6 +40,12 @@ func NewKaijuGenerator() *KaijuGenerator {
 		ThreatLevels: []string{
 			"Low", "Medium", "High", "Critical",
 		},
+		Sizes: []string{
+			"Large", "Huge", "Gigantic", "Colossal", "Titan", "Supreme",
+		},
+		Behaviors: []string{
+			"Aggressive", "Defensive", "Ambush", "Patrol", "Scout",
+		},
 	}
 }
 
@@ -44,6 +54,8 @@ func (kg *KaijuGenerator) Generate() Kaiju {
 		Name:        kg.Prefixes[rand.Intn(len(kg.Prefixes))] + kg.Suffixes[rand.Intn(len(kg.Suffixes))],
 		Location:    kg.Locations[rand.Intn(len(kg.Locations))],
 		ThreatLevel: kg.ThreatLevels[rand.Intn(len(kg.ThreatLevels))],
+		Size:        kg.Sizes[rand.Intn(len(kg.Sizes))],
+		Behavior:    kg.Behaviors[rand.Intn(len(kg.Behaviors))],
 	}
 }
 
@@ -57,4 +69,6 @@ func main() {
 	fmt.Printf("Name: %s\n", kaiju.Name)
 	fmt.Printf("Location: %s\n", kaiju.Location)
 	fmt.Printf("Threat Level: %s\n", kaiju.ThreatLevel)
+	fmt.Printf("Size: %s\n", kaiju.Size)
+	fmt.Printf("Behavior: %s\n", kaiju.Behavior)
 }
