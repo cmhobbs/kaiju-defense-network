@@ -66,9 +66,16 @@ func main() {
 	kaiju := generator.Generate()
 
 	fmt.Printf("🚨 KAIJU SIGHTING ALERT 🚨\n")
-	fmt.Printf("Name: %s\n", kaiju.Name)
-	fmt.Printf("Location: %s\n", kaiju.Location)
-	fmt.Printf("Threat Level: %s\n", kaiju.ThreatLevel)
-	fmt.Printf("Size: %s\n", kaiju.Size)
-	fmt.Printf("Behavior: %s\n", kaiju.Behavior)
+	fmt.Printf("────────────────────────────────────────────────────────────\n")
+	fmt.Printf("🦕 A %s %s has been spotted in %s!\n", kaiju.Size, kaiju.Name, kaiju.Location)
+	fmt.Printf("⚠️  It is exhibiting %s behavior!\n", kaiju.Behavior)
+
+	fmt.Printf("\n✨ DETAILED INFORMATION ✨\n")
+	fmt.Printf("────────────────────────────────────────────────────────────\n")
+	fmt.Printf("👾 Name: %s\n", kaiju.Name)
+	fmt.Printf("📍 Location: %s\n", kaiju.Location)
+	fmt.Printf("⚡ Threat Level: %s\n", kaiju.ThreatLevel)
+	fmt.Printf("📏 Size: %s\n", kaiju.Size)
+	fmt.Printf("🎭 Behavior: %s\n", kaiju.Behavior)
+	fmt.Printf("────────────────────────────────────────────────────────────\n")
 }
