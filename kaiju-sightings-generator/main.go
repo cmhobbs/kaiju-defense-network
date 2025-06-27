@@ -6,6 +6,11 @@ import (
 	"time"
 )
 
+type Sighting struct {
+	Kaiju     Kaiju
+	Timestamp time.Time
+}
+
 type Kaiju struct {
 	Name        string
 	Location    string
@@ -49,7 +54,8 @@ func NewKaijuGenerator() *KaijuGenerator {
 	}
 }
 
-func (kg *KaijuGenerator) Generate() (Kaiju, time.Time) {
+// Generate a single kaiju.
+func (kg *KaijuGenerator) Generate() Kaiju {
 	kaiju := Kaiju{
 		Name:        kg.Prefixes[rand.Intn(len(kg.Prefixes))] + kg.Suffixes[rand.Intn(len(kg.Suffixes))],
 		Location:    kg.Locations[rand.Intn(len(kg.Locations))],
@@ -57,25 +63,30 @@ func (kg *KaijuGenerator) Generate() (Kaiju, time.Time) {
 		Size:        kg.Sizes[rand.Intn(len(kg.Sizes))],
 		Behavior:    kg.Behaviors[rand.Intn(len(kg.Behaviors))],
 	}
-	return kaiju, time.Now()
+	return kaiju
 }
 
-func generateMultiple(count int) []Kaiju {
-	var kaijus []Kaiju
+// Generate multiple kaiju sightings.
+func generateMultiple(count int) []Sighting {
+	var sightings []Sighting
 	for i := 0; i < count; i++ {
 		generator := NewKaijuGenerator()
-		kaiju, _ := generator.Generate()
-		kaijus = append(kaijus, kaiju)
+		kaiju := generator.Generate()
+		sightings = append(sightings, Sighting{
+			Kaiju:     kaiju,
+			Timestamp: time.Now(),
+		})
 	}
-	return kaijus
+	return sightings
 }
 
-// Show output for a single kaiju sighting.
+// Print output for a single kaiju sighting to stdout.
 func main() {
 	rand.Seed(time.Now().UnixNano())
 
-	generator := NewKaijuGenerator()
-	kaiju, sightingTime := generator.Generate()
+	sighting := generateMultiple(1)
+	kaiju := sighting[0].Kaiju
+	sightingTime := sighting[0].Timestamp
 
 	fmt.Printf("🚨 KAIJU SIGHTING ALERT AT %s\n", sightingTime.Format(time.DateTime))
 	fmt.Printf("────────────────────────────────────────────────────────────\n")
@@ -88,6 +99,6 @@ func main() {
 	fmt.Printf("⚡ Threat Level: %s\n", kaiju.ThreatLevel)
 	fmt.Printf("📏 Size: %s\n", kaiju.Size)
 	fmt.Printf("🎭 Behavior: %s\n", kaiju.Behavior)
-	fmt.Printf("⏰ Time: %s\n", sightingTime.Format(time.DateTime))
+	fmt.Printf("⏰ Timestamp: %s\n", sightingTime.Format(time.DateTime))
 	fmt.Printf("────────────────────────────────────────────────────────────\n")
 }

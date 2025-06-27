@@ -34,7 +34,7 @@ func TestGenerate(t *testing.T) {
 	rand.Seed(42)
 	generator := NewKaijuGenerator()
 
-	kaiju, sightingTime := generator.Generate()
+	kaiju := generator.Generate()
 
 	if kaiju.Name == "" {
 		t.Error("Expected kaiju name to be generated")
@@ -94,41 +94,40 @@ func TestGenerate(t *testing.T) {
 	if !validBehavior {
 		t.Errorf("Invalid behavior: %s", kaiju.Behavior)
 	}
-
-	// test that sightingTime is actually a time type
-	if sightingTime.Unix() <= 0 {
-		t.Errorf("Sighting time should have a valid Unix timestamp: %v", sightingTime.Unix())
-	}
-
-	// test that sightingTime has proper date components
-	year, month, day := sightingTime.Date()
-	if year < 2000 || int(month) < 1 || int(month) > 12 || day < 1 || day > 31 {
-		t.Errorf("Sighting time has invalid date components: year=%d, month=%d, day=%d", year, month, day)
-	}
-
-	// test that sightingTime has proper time components
-	hour, min, sec := sightingTime.Clock()
-	if hour < 0 || hour > 23 || min < 0 || min > 59 || sec < 0 || sec > 59 {
-		t.Errorf("Sighting time has invalid time components: hour=%d, min=%d, sec=%d", hour, min, sec)
-	}
 }
 
 func TestGenerateMultiple(t *testing.T) {
-	kaijus := generateMultiple(10)
+	sightings := generateMultiple(10)
 
+	if len(sightings) != 10 {
+		t.Errorf("Expected 10 sightings, got %d", len(sightings))
+	}
+
+	// TODO make this less brittle
 	allSame := true
-	for i := 1; i < len(kaijus); i++ {
-		if kaijus[i].Name != kaijus[0].Name ||
-			kaijus[i].Location != kaijus[0].Location ||
-			kaijus[i].ThreatLevel != kaijus[0].ThreatLevel ||
-			kaijus[i].Size != kaijus[0].Size ||
-			kaijus[i].Behavior != kaijus[0].Behavior {
+	for i := 1; i < len(sightings); i++ {
+		if sightings[i].Kaiju.Name != sightings[0].Kaiju.Name ||
+			sightings[i].Kaiju.Location != sightings[0].Kaiju.Location ||
+			sightings[i].Kaiju.ThreatLevel != sightings[0].Kaiju.ThreatLevel ||
+			sightings[i].Kaiju.Size != sightings[0].Kaiju.Size ||
+			sightings[i].Kaiju.Behavior != sightings[0].Kaiju.Behavior {
 			allSame = false
 			break
 		}
 	}
 
+	// Naively test that our monsters are random
 	if allSame {
 		t.Error("All generated kaiju are identical - randomness may not be working")
+	}
+
+	// Test that all sightings have valid timestamps
+	for i, sighting := range sightings {
+		if sighting.Timestamp.IsZero() {
+			t.Errorf("Sighting %d has zero timestamp", i)
+		}
+		if sighting.Timestamp.Unix() <= 0 {
+			t.Errorf("Sighting %d has invalid Unix timestamp: %v", i, sighting.Timestamp.Unix())
+		}
 	}
 }
