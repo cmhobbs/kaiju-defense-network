@@ -20,7 +20,7 @@ type Kaiju struct {
 }
 
 // TODO update this to include the new Kaiju fields
-func simulateKaijuSighting() (Kaiju, Sighting) {
+func simulateKaijuSighting() Sighting {
 	kaiju := Kaiju{
 		Name:        "Baragon",
 		Location:    "Tokyo",
@@ -32,7 +32,7 @@ func simulateKaijuSighting() (Kaiju, Sighting) {
 		Timestamp: time.Now(),
 	}
 
-	return kaiju, sighting
+	return sighting
 }
 
 func shouldAlert(threatLevel string) bool {
@@ -59,7 +59,8 @@ func formatAlert(kaiju Kaiju) string {
 }
 
 func main() {
-	kaiju, _ := simulateKaijuSighting()
+	sighting := simulateKaijuSighting()
+	kaiju := sighting.Kaiju
 	if shouldAlert(kaiju.ThreatLevel) {
 		alert := formatAlert(kaiju)
 		fmt.Println(alert)
