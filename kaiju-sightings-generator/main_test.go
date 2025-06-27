@@ -29,11 +29,12 @@ func TestNewKaijuGenerator(t *testing.T) {
 	}
 }
 
+// TODO clean this test up, it is doing a lot of things
 func TestGenerate(t *testing.T) {
 	rand.Seed(42)
 	generator := NewKaijuGenerator()
 
-	kaiju := generator.Generate()
+	kaiju, sightingTime := generator.Generate()
 
 	if kaiju.Name == "" {
 		t.Error("Expected kaiju name to be generated")
@@ -92,6 +93,23 @@ func TestGenerate(t *testing.T) {
 	}
 	if !validBehavior {
 		t.Errorf("Invalid behavior: %s", kaiju.Behavior)
+	}
+
+	// test that sightingTime is actually a time type
+	if sightingTime.Unix() <= 0 {
+		t.Errorf("Sighting time should have a valid Unix timestamp: %v", sightingTime.Unix())
+	}
+
+	// test that sightingTime has proper date components
+	year, month, day := sightingTime.Date()
+	if year < 2000 || int(month) < 1 || int(month) > 12 || day < 1 || day > 31 {
+		t.Errorf("Sighting time has invalid date components: year=%d, month=%d, day=%d", year, month, day)
+	}
+
+	// test that sightingTime has proper time components
+	hour, min, sec := sightingTime.Clock()
+	if hour < 0 || hour > 23 || min < 0 || min > 59 || sec < 0 || sec > 59 {
+		t.Errorf("Sighting time has invalid time components: hour=%d, min=%d, sec=%d", hour, min, sec)
 	}
 }
 

@@ -49,21 +49,23 @@ func NewKaijuGenerator() *KaijuGenerator {
 	}
 }
 
-func (kg *KaijuGenerator) Generate() Kaiju {
-	return Kaiju{
+func (kg *KaijuGenerator) Generate() (Kaiju, time.Time) {
+	kaiju := Kaiju{
 		Name:        kg.Prefixes[rand.Intn(len(kg.Prefixes))] + kg.Suffixes[rand.Intn(len(kg.Suffixes))],
 		Location:    kg.Locations[rand.Intn(len(kg.Locations))],
 		ThreatLevel: kg.ThreatLevels[rand.Intn(len(kg.ThreatLevels))],
 		Size:        kg.Sizes[rand.Intn(len(kg.Sizes))],
 		Behavior:    kg.Behaviors[rand.Intn(len(kg.Behaviors))],
 	}
+	return kaiju, time.Now()
 }
 
 func generateMultiple(count int) []Kaiju {
 	var kaijus []Kaiju
 	for i := 0; i < count; i++ {
 		generator := NewKaijuGenerator()
-		kaijus = append(kaijus, generator.Generate())
+		kaiju, _ := generator.Generate()
+		kaijus = append(kaijus, kaiju)
 	}
 	return kaijus
 }
@@ -73,9 +75,9 @@ func main() {
 	rand.Seed(time.Now().UnixNano())
 
 	generator := NewKaijuGenerator()
-	kaiju := generator.Generate()
+	kaiju, sightingTime := generator.Generate()
 
-	fmt.Printf("🚨 KAIJU SIGHTING ALERT AT %s\n", time.Now().Format(time.DateTime))
+	fmt.Printf("🚨 KAIJU SIGHTING ALERT AT %s\n", sightingTime.Format(time.DateTime))
 	fmt.Printf("────────────────────────────────────────────────────────────\n")
 	fmt.Printf("A %s %s has been spotted in %s,\nexhibiting %s behavior!\n\nIt is a %s threat.\n", kaiju.Size, kaiju.Name, kaiju.Location, kaiju.Behavior, kaiju.ThreatLevel)
 
@@ -86,5 +88,6 @@ func main() {
 	fmt.Printf("⚡ Threat Level: %s\n", kaiju.ThreatLevel)
 	fmt.Printf("📏 Size: %s\n", kaiju.Size)
 	fmt.Printf("🎭 Behavior: %s\n", kaiju.Behavior)
+	fmt.Printf("⏰ Time: %s\n", sightingTime.Format(time.DateTime))
 	fmt.Printf("────────────────────────────────────────────────────────────\n")
 }
