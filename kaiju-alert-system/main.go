@@ -3,21 +3,36 @@ package main
 import (
 	"fmt"
 	"strings"
+	"time"
 )
+
+type Sighting struct {
+	Kaiju     Kaiju
+	Timestamp time.Time
+}
 
 type Kaiju struct {
 	Name        string
 	Location    string
 	ThreatLevel string
+	Size        string
+	Behavior    string
 }
 
 // TODO update this to include the new Kaiju fields
-func simulateKaijuSighting() Kaiju {
-	return Kaiju{
+func simulateKaijuSighting() (Kaiju, Sighting) {
+	kaiju := Kaiju{
 		Name:        "Baragon",
 		Location:    "Tokyo",
 		ThreatLevel: "High",
 	}
+
+	sighting := Sighting{
+		Kaiju:     kaiju,
+		Timestamp: time.Now(),
+	}
+
+	return kaiju, sighting
 }
 
 func shouldAlert(threatLevel string) bool {
@@ -44,7 +59,7 @@ func formatAlert(kaiju Kaiju) string {
 }
 
 func main() {
-	kaiju := simulateKaijuSighting()
+	kaiju, _ := simulateKaijuSighting()
 	if shouldAlert(kaiju.ThreatLevel) {
 		alert := formatAlert(kaiju)
 		fmt.Println(alert)
