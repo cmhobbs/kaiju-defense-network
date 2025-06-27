@@ -34,7 +34,8 @@ To run tests, use `go test -v` in each desired directory.
 ## Kaiju Alert System
 - [x] Output an alert to stdout when a high-threat kaiju is sighted above a defined threshold
   - [x] write tests for `shouldAlert()` and `formatAlert()`
-- [ ] Output an action based on the threat level (e.g., evacuate, deploy defenses)
+- [x] Output an action based on the threat level (e.g., evacuate, deploy defenses)
+- [ ] Add timestamp to each alert from sighting
 - [ ] Write alerts to a log file like `alerts.log` including full details
 - [ ] Process multiple sightings in one batch
 
