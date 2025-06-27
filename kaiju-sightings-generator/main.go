@@ -68,6 +68,7 @@ func generateMultiple(count int) []Kaiju {
 	return kaijus
 }
 
+// Show output for a single kaiju sighting.
 func main() {
 	rand.Seed(time.Now().UnixNano())
 

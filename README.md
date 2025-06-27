@@ -7,7 +7,7 @@ This is a simple project I'm noodling with to refamiliarize myself with Go.
 - [x] Output the sighting to the terminal
 - [x] Add size and element traits to each kaiju randomly
 - [x] Add a timestamp to each sighting ("2025-06-20 22:14")
-- [ ] Generate multiple sightings in one run
+- [x] Generate multiple sightings in one run
 
 ## Kaiju Alert System
 - [x] Output an alert to stdout when a high-threat kaiju is sighted above a defined threshold
