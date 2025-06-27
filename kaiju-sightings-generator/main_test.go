@@ -96,12 +96,7 @@ func TestGenerate(t *testing.T) {
 }
 
 func TestGenerateMultiple(t *testing.T) {
-	generator := NewKaijuGenerator()
-
-	kaijus := make([]Kaiju, 10)
-	for i := 0; i < 10; i++ {
-		kaijus[i] = generator.Generate()
-	}
+	kaijus := generateMultiple(10)
 
 	allSame := true
 	for i := 1; i < len(kaijus); i++ {

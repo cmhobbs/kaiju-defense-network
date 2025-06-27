@@ -59,6 +59,15 @@ func (kg *KaijuGenerator) Generate() Kaiju {
 	}
 }
 
+func generateMultiple(count int) []Kaiju {
+	var kaijus []Kaiju
+	for i := 0; i < count; i++ {
+		generator := NewKaijuGenerator()
+		kaijus = append(kaijus, generator.Generate())
+	}
+	return kaijus
+}
+
 func main() {
 	rand.Seed(time.Now().UnixNano())
 
