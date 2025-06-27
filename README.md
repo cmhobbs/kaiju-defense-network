@@ -2,6 +2,28 @@
 
 This is a simple project I'm noodling with to refamiliarize myself with Go.
 
+## Usage
+
+To generate a random kaiju sighting and print it to `stdout`, run the following command from the `kaiju-sightings-generator` directory:
+
+```
+go run main.go
+```
+
+To log a random kaiju sighting to `stdout`, run the following command from the `kaiju-alert-system` directory:
+
+```
+go run main.go
+```
+
+To generate multiple sightings, use the `generateMultiple()` function with a count parameter in your code:
+
+```
+generateMultiple(5)
+```
+
+To run tests, use `go test -v` in each desired directory.
+
 ## Kaiju Sightings Generator Tasks
 - [x] Generate a random kaiju sighting with name/location/threat level
 - [x] Output the sighting to the terminal
