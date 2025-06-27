@@ -19,6 +19,7 @@ This is a simple project I'm noodling with to refamiliarize myself with Go.
 ## Further Review:  Connecting Sightings and Alerts
 
 - [ ] Modify the modules to call each other by function
+- [ ] Refactor `Generate()` to be less complicated/cute.  Pointers might not be necessary.
 - [ ] On a separate branch, modify the alert system to read sightings from a JSON file from the generator
 - [ ] On a seprate branch, use a Go channel to send sightings from the generator to the alert system (alert system running in a separate goroutine and listening on the channel)
 - [ ] On a separate branch, stuff each service into podman containers
