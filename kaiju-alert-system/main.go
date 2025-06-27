@@ -11,6 +11,7 @@ type Kaiju struct {
 	ThreatLevel string
 }
 
+// TODO update this to include the new Kaiju fields
 func simulateKaijuSighting() Kaiju {
 	return Kaiju{
 		Name:        "Baragon",
