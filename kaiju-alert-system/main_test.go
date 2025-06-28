@@ -1,7 +1,9 @@
 package main
 
 import (
+	"strings"
 	"testing"
+	"time"
 )
 
 var (
@@ -29,22 +31,33 @@ func TestShouldNotAlert(t *testing.T) {
 }
 
 func TestFormatAlert(t *testing.T) {
-	criticalAlert := formatAlert(criticalAlertKaiju)
-	expectedCritical := "WARNING: A CRITICAL LEVEL KAIJU HAS BEEN SPOTTED.  EVACUATE IMMEDIATELY."
-	if criticalAlert != expectedCritical {
-		t.Errorf("Expected formatAlert for critical threat to return %q, but got %q", expectedCritical, criticalAlert)
+	testTime := time.Date(2024, 1, 15, 14, 30, 0, 0, time.UTC)
+
+	criticalSighting := Sighting{Kaiju: criticalAlertKaiju, Timestamp: testTime}
+	criticalAlert := formatAlert(criticalSighting)
+	if !strings.Contains(criticalAlert, "2024-01-15 14:30:00") {
+		t.Errorf("Expected formatAlert to include timestamp at beginning, but got %q", criticalAlert)
+	}
+	if !strings.Contains(criticalAlert, "WARNING: A CRITICAL LEVEL KAIJU HAS BEEN SPOTTED!  EVACUATE IMMEDIATELY.") {
+		t.Errorf("Expected formatAlert to contain critical alert message, but got %q", criticalAlert)
 	}
 
-	highAlert := formatAlert(highAlertKaiju)
-	expectedHigh := "WARNING: A HIGH LEVEL KAIJU HAS BEEN SPOTTED.  PREPARE DEFENSES."
-	if highAlert != expectedHigh {
-		t.Errorf("Expected formatAlert for high threat to return %q, but got %q", expectedHigh, highAlert)
+	highSighting := Sighting{Kaiju: highAlertKaiju, Timestamp: testTime}
+	highAlert := formatAlert(highSighting)
+	if !strings.Contains(highAlert, "2024-01-15 14:30:00") {
+		t.Errorf("Expected formatAlert to include timestamp at beginning, but got %q", highAlert)
+	}
+	if !strings.Contains(highAlert, "WARNING: A HIGH LEVEL KAIJU HAS BEEN SPOTTED!  PREPARE DEFENSES.") {
+		t.Errorf("Expected formatAlert to contain high alert message, but got %q", highAlert)
 	}
 
 	// Added for completeness.  Ideally we will not see this level of threat in an alert
-	lowAlert := formatAlert(lowAlertKaiju)
-	expectedLow := "WARNING: A LOW LEVEL KAIJU HAS BEEN SPOTTED.  MONITOR SITUATION."
-	if lowAlert != expectedLow {
-		t.Errorf("Expected formatAlert for low threat to return %q, but got %q", expectedLow, lowAlert)
+	lowSighting := Sighting{Kaiju: lowAlertKaiju, Timestamp: testTime}
+	lowAlert := formatAlert(lowSighting)
+	if !strings.Contains(lowAlert, "2024-01-15 14:30:00") {
+		t.Errorf("Expected formatAlert to include timestamp at beginning, but got %q", lowAlert)
+	}
+	if !strings.Contains(lowAlert, "WARNING: A LOW LEVEL KAIJU HAS BEEN SPOTTED!  MONITOR SITUATION.") {
+		t.Errorf("Expected formatAlert to contain low alert message, but got %q", lowAlert)
 	}
 }

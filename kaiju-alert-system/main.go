@@ -52,17 +52,19 @@ func requiredAction(threatLevel string) string {
 	}
 }
 
-func formatAlert(kaiju Kaiju) string {
+func formatAlert(sighting Sighting) string {
+	kaiju := sighting.Kaiju
 	threatLevel := strings.ToUpper(kaiju.ThreatLevel)
 	action := requiredAction(kaiju.ThreatLevel)
-	return fmt.Sprintf("WARNING: A %s LEVEL KAIJU HAS BEEN SPOTTED.  %s.", threatLevel, action)
+
+	return fmt.Sprintf("%s - WARNING: A %s LEVEL KAIJU HAS BEEN SPOTTED!  %s.", sighting.Timestamp.Format(time.DateTime), threatLevel, action)
 }
 
 func main() {
 	sighting := simulateKaijuSighting()
 	kaiju := sighting.Kaiju
 	if shouldAlert(kaiju.ThreatLevel) {
-		alert := formatAlert(kaiju)
+		alert := formatAlert(sighting)
 		fmt.Println(alert)
 	}
 }
