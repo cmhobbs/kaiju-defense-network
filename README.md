@@ -4,40 +4,57 @@ This is a simple project I'm noodling with to refamiliarize myself with Go.
 
 ## Usage
 
-To generate a random kaiju sighting and print it to `stdout`, run the following command from the `kaiju-sightings-generator` directory:
+To log a few random kaiju sightings to `alert.log` and display them in stdout, run the following command from the `kaiju-alert-system` directory:
 
 ```
 $ go run main.go
-🚨 KAIJU SIGHTING ALERT AT 2025-06-27 21:37:02
 ────────────────────────────────────────────────────────────
-A Gigantic Neomoth has been spotted in Moscow,
-exhibiting Defensive behavior!
+🚨 KAIJU SIGHTING ALERT AT 2025-06-27 22:16:43
+
+A Gigantic Megadragon has been spotted in Beijing,
+exhibiting Ambush behavior!
+
+It is a Critical threat.
+
+⚠️  SIGHTING DETAILS
+
+	👾 Name: Megadragon
+	📍 Location: Beijing
+	⚡ Threat Level: Critical
+	📏 Size: Gigantic
+	🎭 Behavior: Ambush
+	⏰ Timestamp: 2025-06-27 22:16:43
+────────────────────────────────────────────────────────────
+Threshold hit, logging alert...
+
+────────────────────────────────────────────────────────────
+🚨 KAIJU SIGHTING ALERT AT 2025-06-27 22:16:43
+
+A Supreme Neomoth has been spotted in Rome,
+exhibiting Patrol behavior!
 
 It is a Medium threat.
 
 ⚠️  SIGHTING DETAILS
+
+	👾 Name: Neomoth
+	📍 Location: Rome
+	⚡ Threat Level: Medium
+	📏 Size: Supreme
+	🎭 Behavior: Patrol
+	⏰ Timestamp: 2025-06-27 22:16:43
 ────────────────────────────────────────────────────────────
-👾 Name: Neomoth
-📍 Location: Moscow
-⚡ Threat Level: Medium
-📏 Size: Gigantic
-🎭 Behavior: Defensive
-⏰ Timestamp: 2025-06-27 21:37:02
-────────────────────────────────────────────────────────────
+Threshold too low, alert will not be logged...
+
+...
 ```
 
-To log a random kaiju sighting to `alert.log`, run the following command from the `kaiju-alert-system` directory:
+You can then check `alert.log` for details:
 
 ```
-$ go run main.go
 $ cat alert.log
-2025-06-27 21:37:49 - WARNING: A HIGH LEVEL KAIJU HAS BEEN SPOTTED!  PREPARE DEFENSES.
-```
-
-To generate multiple sightings, use the `generateMultiple()` function with a count parameter in your code:
-
-```
-generateMultiple(5)
+2025-06-27 22:16:43 - WARNING: A CRITICAL LEVEL KAIJU HAS BEEN SPOTTED!  EVACUATE IMMEDIATELY.
+...
 ```
 
 To run tests, use `go test -v` in each desired directory.
@@ -55,11 +72,11 @@ To run tests, use `go test -v` in each desired directory.
 - [x] Output an action based on the threat level (e.g., evacuate, deploy defenses)
 - [x] Add timestamp to each alert from sighting
 - [x] Write alerts to a log file like `alerts.log` including full details
-- [ ] Process multiple sightings in one batch
+- [x] Process multiple sightings in one batch
 
 ## Further Review:  Connecting Sightings and Alerts
 
-- [ ] Modify the modules to call each other by function
+- [x] Modify the modules to call each other by function
 - [ ] Refactor `Generate()` to be less complicated/cute.  Pointers might not be necessary.
 - [ ] On a separate branch, modify the alert system to read sightings from a JSON file from the generator
 - [ ] On a seprate branch, use a Go channel to send sightings from the generator to the alert system (alert system running in a separate goroutine and listening on the channel)

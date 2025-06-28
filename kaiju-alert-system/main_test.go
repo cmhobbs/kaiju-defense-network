@@ -1,6 +1,7 @@
 package main
 
 import (
+	kaijuSightingsGenerator "kaiju-sightings-generator"
 	"os"
 	"strings"
 	"testing"
@@ -8,9 +9,9 @@ import (
 )
 
 var (
-	criticalAlertKaiju = Kaiju{Name: "Godzilla", Location: "Tokyo", ThreatLevel: "Critical"}
-	highAlertKaiju     = Kaiju{Name: "Megalon", Location: "Syndney", ThreatLevel: "High"}
-	lowAlertKaiju      = Kaiju{Name: "Mothra", Location: "New York", ThreatLevel: "Low"}
+	criticalAlertKaiju = kaijuSightingsGenerator.Kaiju{Name: "Godzilla", Location: "Tokyo", ThreatLevel: "Critical"}
+	highAlertKaiju     = kaijuSightingsGenerator.Kaiju{Name: "Megalon", Location: "Syndney", ThreatLevel: "High"}
+	lowAlertKaiju      = kaijuSightingsGenerator.Kaiju{Name: "Mothra", Location: "New York", ThreatLevel: "Low"}
 )
 
 func TestShouldAlert(t *testing.T) {
@@ -34,7 +35,7 @@ func TestShouldNotAlert(t *testing.T) {
 func TestFormatAlert(t *testing.T) {
 	testTime := time.Date(2024, 1, 15, 14, 30, 0, 0, time.UTC)
 
-	criticalSighting := Sighting{Kaiju: criticalAlertKaiju, Timestamp: testTime}
+	criticalSighting := kaijuSightingsGenerator.Sighting{Kaiju: criticalAlertKaiju, Timestamp: testTime}
 	criticalAlert := formatAlert(criticalSighting)
 	if !strings.Contains(criticalAlert, "2024-01-15 14:30:00") {
 		t.Errorf("Expected formatAlert to include timestamp at beginning, but got %q", criticalAlert)
@@ -43,7 +44,7 @@ func TestFormatAlert(t *testing.T) {
 		t.Errorf("Expected formatAlert to contain critical alert message, but got %q", criticalAlert)
 	}
 
-	highSighting := Sighting{Kaiju: highAlertKaiju, Timestamp: testTime}
+	highSighting := kaijuSightingsGenerator.Sighting{Kaiju: highAlertKaiju, Timestamp: testTime}
 	highAlert := formatAlert(highSighting)
 	if !strings.Contains(highAlert, "2024-01-15 14:30:00") {
 		t.Errorf("Expected formatAlert to include timestamp at beginning, but got %q", highAlert)
@@ -53,7 +54,7 @@ func TestFormatAlert(t *testing.T) {
 	}
 
 	// Added for completeness.  Ideally we will not see this level of threat in an alert
-	lowSighting := Sighting{Kaiju: lowAlertKaiju, Timestamp: testTime}
+	lowSighting := kaijuSightingsGenerator.Sighting{Kaiju: lowAlertKaiju, Timestamp: testTime}
 	lowAlert := formatAlert(lowSighting)
 	if !strings.Contains(lowAlert, "2024-01-15 14:30:00") {
 		t.Errorf("Expected formatAlert to include timestamp at beginning, but got %q", lowAlert)

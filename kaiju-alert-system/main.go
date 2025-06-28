@@ -2,40 +2,12 @@ package main
 
 import (
 	"fmt"
+	kaijuSightingsGenerator "kaiju-sightings-generator"
 	"log"
 	"os"
 	"strings"
 	"time"
 )
-
-type Sighting struct {
-	Kaiju     Kaiju
-	Timestamp time.Time
-}
-
-type Kaiju struct {
-	Name        string
-	Location    string
-	ThreatLevel string
-	Size        string
-	Behavior    string
-}
-
-// TODO update this to include the new Kaiju fields
-func simulateKaijuSighting() Sighting {
-	kaiju := Kaiju{
-		Name:        "Baragon",
-		Location:    "Tokyo",
-		ThreatLevel: "High",
-	}
-
-	sighting := Sighting{
-		Kaiju:     kaiju,
-		Timestamp: time.Now(),
-	}
-
-	return sighting
-}
 
 func shouldAlert(threatLevel string) bool {
 	return threatLevel == "High" || threatLevel == "Critical"
@@ -54,7 +26,7 @@ func requiredAction(threatLevel string) string {
 	}
 }
 
-func formatAlert(sighting Sighting) string {
+func formatAlert(sighting kaijuSightingsGenerator.Sighting) string {
 	kaiju := sighting.Kaiju
 	threatLevel := strings.ToUpper(kaiju.ThreatLevel)
 	action := requiredAction(kaiju.ThreatLevel)
@@ -63,21 +35,31 @@ func formatAlert(sighting Sighting) string {
 }
 
 func main() {
-	sighting := simulateKaijuSighting()
-	kaiju := sighting.Kaiju
+	sightings := kaijuSightingsGenerator.GenerateMultiple(5)
 
-	if shouldAlert(kaiju.ThreatLevel) {
-		alert := formatAlert(sighting)
+	for _, sighting := range sightings {
+		kaijuSightingsGenerator.PrintSingleSighting(sighting)
+		kaiju := sighting.Kaiju
 
-		file, err := os.OpenFile("alert.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
-		if err != nil {
-			log.Fatal(err)
-		}
-		defer file.Close()
+		if shouldAlert(kaiju.ThreatLevel) {
+			fmt.Println("Threshold hit, logging alert...")
+			fmt.Println()
 
-		_, err = file.WriteString(alert + "\n")
-		if err != nil {
-			log.Fatal(err)
+			alert := formatAlert(sighting)
+
+			file, err := os.OpenFile("alert.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
+			if err != nil {
+				log.Fatal(err)
+			}
+			defer file.Close()
+
+			_, err = file.WriteString(alert + "\n")
+			if err != nil {
+				log.Fatal(err)
+			}
+		} else {
+			fmt.Println("Threshold too low, alert will not be logged...")
+			fmt.Println()
 		}
 	}
 }

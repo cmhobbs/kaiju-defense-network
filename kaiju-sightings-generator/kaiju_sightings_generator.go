@@ -1,4 +1,4 @@
-package main
+package kaiju
 
 import (
 	"fmt"
@@ -66,8 +66,8 @@ func (kg *KaijuGenerator) Generate() Kaiju {
 	return kaiju
 }
 
-// Generate multiple kaiju sightings.
-func generateMultiple(count int) []Sighting {
+// GenerateMultiple creates multiple kaiju sightings.
+func GenerateMultiple(count int) []Sighting {
 	var sightings []Sighting
 	for i := 0; i < count; i++ {
 		generator := NewKaijuGenerator()
@@ -81,24 +81,23 @@ func generateMultiple(count int) []Sighting {
 }
 
 // Print output for a single kaiju sighting to stdout.
-func main() {
-	rand.Seed(time.Now().UnixNano())
+// TODO test this function
+func PrintSingleSighting(sighting Sighting) {
+	kaiju := sighting.Kaiju
+	sightingTime := sighting.Timestamp
 
-	sighting := generateMultiple(1)
-	kaiju := sighting[0].Kaiju
-	sightingTime := sighting[0].Timestamp
-
-	fmt.Printf("🚨 KAIJU SIGHTING ALERT AT %s\n", sightingTime.Format(time.DateTime))
 	fmt.Printf("────────────────────────────────────────────────────────────\n")
+	fmt.Printf("🚨 KAIJU SIGHTING ALERT AT %s\n", sightingTime.Format(time.DateTime))
+	fmt.Println()
 	fmt.Printf("A %s %s has been spotted in %s,\nexhibiting %s behavior!\n\nIt is a %s threat.\n", kaiju.Size, kaiju.Name, kaiju.Location, kaiju.Behavior, kaiju.ThreatLevel)
 
 	fmt.Printf("\n⚠️  SIGHTING DETAILS\n")
-	fmt.Printf("────────────────────────────────────────────────────────────\n")
-	fmt.Printf("👾 Name: %s\n", kaiju.Name)
-	fmt.Printf("📍 Location: %s\n", kaiju.Location)
-	fmt.Printf("⚡ Threat Level: %s\n", kaiju.ThreatLevel)
-	fmt.Printf("📏 Size: %s\n", kaiju.Size)
-	fmt.Printf("🎭 Behavior: %s\n", kaiju.Behavior)
-	fmt.Printf("⏰ Timestamp: %s\n", sightingTime.Format(time.DateTime))
+	fmt.Println()
+	fmt.Printf("\t👾 Name: %s\n", kaiju.Name)
+	fmt.Printf("\t📍 Location: %s\n", kaiju.Location)
+	fmt.Printf("\t⚡ Threat Level: %s\n", kaiju.ThreatLevel)
+	fmt.Printf("\t📏 Size: %s\n", kaiju.Size)
+	fmt.Printf("\t🎭 Behavior: %s\n", kaiju.Behavior)
+	fmt.Printf("\t⏰ Timestamp: %s\n", sightingTime.Format(time.DateTime))
 	fmt.Printf("────────────────────────────────────────────────────────────\n")
 }

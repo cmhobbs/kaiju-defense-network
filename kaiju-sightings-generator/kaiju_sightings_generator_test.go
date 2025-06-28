@@ -1,4 +1,4 @@
-package main
+package kaiju
 
 import (
 	"math/rand"
@@ -97,7 +97,7 @@ func TestGenerate(t *testing.T) {
 }
 
 func TestGenerateMultiple(t *testing.T) {
-	sightings := generateMultiple(10)
+	sightings := GenerateMultiple(10)
 
 	if len(sightings) != 10 {
 		t.Errorf("Expected 10 sightings, got %d", len(sightings))
