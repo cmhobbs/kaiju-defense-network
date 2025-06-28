@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"log"
+	"os"
 	"strings"
 	"time"
 )
@@ -63,8 +65,19 @@ func formatAlert(sighting Sighting) string {
 func main() {
 	sighting := simulateKaijuSighting()
 	kaiju := sighting.Kaiju
+
 	if shouldAlert(kaiju.ThreatLevel) {
 		alert := formatAlert(sighting)
-		fmt.Println(alert)
+
+		file, err := os.OpenFile("alert.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
+		if err != nil {
+			log.Fatal(err)
+		}
+		defer file.Close()
+
+		_, err = file.WriteString(alert + "\n")
+		if err != nil {
+			log.Fatal(err)
+		}
 	}
 }

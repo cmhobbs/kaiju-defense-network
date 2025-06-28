@@ -1,6 +1,7 @@
 package main
 
 import (
+	"os"
 	"strings"
 	"testing"
 	"time"
@@ -60,4 +61,17 @@ func TestFormatAlert(t *testing.T) {
 	if !strings.Contains(lowAlert, "WARNING: A LOW LEVEL KAIJU HAS BEEN SPOTTED!  MONITOR SITUATION.") {
 		t.Errorf("Expected formatAlert to contain low alert message, but got %q", lowAlert)
 	}
+}
+
+// NOTE this will nuke your log file, which doesn't matter for a silly project like this but
+// production ready code would need a better way to test this.
+func TestMainWritesToLogFile(t *testing.T) {
+	os.Remove("alert.log")
+	main()
+
+	if _, err := os.Stat("alert.log"); os.IsNotExist(err) {
+		t.Errorf("Expected alert.log file to be created, but it doesn't exist")
+	}
+
+	os.Remove("alert.log")
 }

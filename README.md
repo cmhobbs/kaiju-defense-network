@@ -10,7 +10,7 @@ To generate a random kaiju sighting and print it to `stdout`, run the following 
 go run main.go
 ```
 
-To log a random kaiju sighting to `stdout`, run the following command from the `kaiju-alert-system` directory:
+To log a random kaiju sighting to `alert.log`, run the following command from the `kaiju-alert-system` directory:
 
 ```
 go run main.go
@@ -36,7 +36,7 @@ To run tests, use `go test -v` in each desired directory.
   - [x] write tests for `shouldAlert()` and `formatAlert()`
 - [x] Output an action based on the threat level (e.g., evacuate, deploy defenses)
 - [x] Add timestamp to each alert from sighting
-- [ ] Write alerts to a log file like `alerts.log` including full details
+- [x] Write alerts to a log file like `alerts.log` including full details
 - [ ] Process multiple sightings in one batch
 
 ## Further Review:  Connecting Sightings and Alerts
