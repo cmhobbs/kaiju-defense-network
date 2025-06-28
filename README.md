@@ -7,13 +7,31 @@ This is a simple project I'm noodling with to refamiliarize myself with Go.
 To generate a random kaiju sighting and print it to `stdout`, run the following command from the `kaiju-sightings-generator` directory:
 
 ```
-go run main.go
+$ go run main.go
+🚨 KAIJU SIGHTING ALERT AT 2025-06-27 21:37:02
+────────────────────────────────────────────────────────────
+A Gigantic Neomoth has been spotted in Moscow,
+exhibiting Defensive behavior!
+
+It is a Medium threat.
+
+⚠️  SIGHTING DETAILS
+────────────────────────────────────────────────────────────
+👾 Name: Neomoth
+📍 Location: Moscow
+⚡ Threat Level: Medium
+📏 Size: Gigantic
+🎭 Behavior: Defensive
+⏰ Timestamp: 2025-06-27 21:37:02
+────────────────────────────────────────────────────────────
 ```
 
 To log a random kaiju sighting to `alert.log`, run the following command from the `kaiju-alert-system` directory:
 
 ```
-go run main.go
+$ go run main.go
+$ cat alert.log
+2025-06-27 21:37:49 - WARNING: A HIGH LEVEL KAIJU HAS BEEN SPOTTED!  PREPARE DEFENSES.
 ```
 
 To generate multiple sightings, use the `generateMultiple()` function with a count parameter in your code:
